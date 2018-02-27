@@ -3,8 +3,13 @@
 # Recipe:: default
 #
 # Copyright:: 2018, The Authors, All Rights Reserved.
- package 'apache' do
-    package_name 'httpd'
+if node['platform_family'] == "rhel"
+  package = "httpd"
+elseif node['platform_family'] == "debian"
+  package = "apache2"
+end
+package 'apache' do
+    package_name package
     action :install
 end
 
